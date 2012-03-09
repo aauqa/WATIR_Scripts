@@ -23,11 +23,18 @@ end
 #
 #
 ######################################################
-
+#Make a new Safari Browser
 browser = Watir::Safari.new
+#Navigate to ServerURL
 browser.goto(server)
+#Enter User/Pass, then click Login
 browser.text_field(:name, "username").set(username)
 browser.password(:name, "password").set(password)
 browser.button(:name, "buttonWrapper:login").click
-
+######################################################
+# GO TO Courses Dashboard
+browser.link(:text, "Dashboard").click
+browser.link(:href, "courseList").click
+#Checks to see if HTML of page contains word "Current", writes FAILURE
+#to screen if no such text is present
 puts "FAILURE" unless browser.contains_text("Current")
