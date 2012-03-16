@@ -1,0 +1,23 @@
+User Groups:
+    Student:
+        - Access userHome
+        - Access specific course (landing page)
+            Sumbit Eval
+            Sign up for Proctored Exam
+        - Access Module content
+            specific page/set of pages
+        - Access media download page
+            download specific media content
+        - Access Discussion landing page
+            access specific disucssion topic
+            post a comment in a topic
+                w/o attachment
+                w/ attachment
+            access specific post (view/download attached files)
+                add a comment to a post
+                    w/o attachment
+                    w/ attachment
+                access whiteboard for specific attachment
+                    //piv, hellllllp
+                
+                
