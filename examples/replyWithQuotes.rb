@@ -66,4 +66,4 @@ firefox.button(:name, "createAndSaveReplyToPost").click
 #wait, webdriver is too fast
 sleep 1
 
-puts firefox.divs(:class, "topic-post").last.divs[1].div(:class, "quoted-post user-content").divs[0].html
+puts firefox.divs(:class, "topic-post").last.divs[1].html
