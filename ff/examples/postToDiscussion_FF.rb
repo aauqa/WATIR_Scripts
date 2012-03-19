@@ -38,8 +38,10 @@ firefox.text_field(:name, "password").set(password)
 firefox.button(:name, "buttonWrapper:login").click
 #wait, webdriver is too fast
 sleep 1
+
 #click on course name
 #example - puts firefox.link(:text, "FSH_102_OL3: Fashion Illustration 1").to_s()
+
 firefox.link(:text, "FSH_102_OL3: Fashion Illustration 1").click
 #wait, webdriver is too fast
 sleep 1
