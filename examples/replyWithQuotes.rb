@@ -29,39 +29,41 @@ else
   puts "Use a third ARg!"
 end
 
-def chooseLinks (browser)
-  
-  counter = 0
-  browser.links.each{ |l|
-    if l.text.empty? == false
-      puts counter.to_s + "- " + l.text 
-    end
-    counter = counter + 1      
-  }
-  counter = 0
-  puts "Choose a link:"  
-  result = $stdin.gets.chomp
-  browser.links[result.to_i].click
-  
-end
-
 #goto Pre or Post
 firefox.goto(server)
-
 #Enter User/Pass, then click Login
 firefox.text_field(:name, "username").set(username)
 firefox.text_field(:name, "password").set(password)
 firefox.button(:name, "buttonWrapper:login").click
 #wait, webdriver is too fast
 sleep 2
-chooseLinks(firefox)
+
+#Gets us to HomePage
+
+#From here, we map out a click pattern that user will take.
+firefox.links[19].click
+# same as firefox.link(:text, "FSH_102_OL3: Fashion Illustration 1')
+sleep 1
   #If grading form is active, click through
   if firefox.text.include? "Official Grading Form"
     firefox.link(:text, "here").click
     sleep 2;
   end
-chooseLinks(firefox)
-chooseLinks(firefox)
-chooseLinks(firefox)
-chooseLinks(firefox)
+#go to Discussion
+firefox.links[10].click
+sleep 1
+#go to Instructor's Office
+firefox.links[45].click
+#from here we make a post, or reply to one in existence with quotes
+firefox.links[33].click #reply w/ quotes to first post
+sleep 1
+#enter a Subject for a post
+firefox.text_field(:name, "post.subject").set("Sample Post")
+#enter text into tinymce
+firefox.frame(:id => "post.body_ifr").send_keys 'hello world again'
+#submit
+firefox.button(:name, "createAndSaveReplyToPost").click
+#wait, webdriver is too fast
+sleep 1
 
+puts firefox.divs(:class, "topic-post").last.divs[1].div(:class, "quoted-post user-content").divs[0].html
