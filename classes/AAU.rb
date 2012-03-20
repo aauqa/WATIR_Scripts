@@ -1,21 +1,60 @@
 class AAU
+  require 'watir-webdriver'
+  $firefox
   def initialize
-    
+    $firefox = Watir::Browser.new :firefox 
   end
-  def links(browser)
-  counter = 0
-  browser.links.each{ |l|
+  #list all links, wait to choose which to click
+  def links
+    counter = 0
+    $firefox.links.each{ |l|
     if l.text.empty? == false
       puts counter.to_s + "- " + l.text 
     end
     counter = counter + 1      
-  }
-  counter = 0
-  puts "Choose a link:"  
-  result = $stdin.gets.chomp
-  browser.links[result.to_i].click  
+    }
+    counter = 0
+    puts "Choose a link:"  
+    result = $stdin.gets.chomp
+    if result.empty? == false
+      $firefox.links[result.to_i].click  
+    else puts "No selection made"
+    end
   end
-  def login(browser, username, password, serverShort)
+  
+  
+  def textboxes(sampletext)
+    counter = 0
+    $firefox.text_fields.each{ |l|
+      puts counter.to_s + "- " + l.name 
+    counter = counter + 1      
+    }
+    counter = 0
+    puts "Which box to enter text"
+    result = $stdin.gets.chomp
+    if result.empty? == false
+      $firefox.text_fields[result.to_i].set(sampletext)  
+    else puts "No selection made"
+    end    
+  end
+  
+  
+  def dropdowns(option)
+    counter = 0
+    $firefox.select_lists.each{ |l|
+      puts counter.to_s + "- " + l.name 
+    counter = counter + 1      
+    }
+    counter = 0
+    puts "Which box to enter text"
+    result = $stdin.gets.chomp
+    if result.empty? == false
+      $firefox.select_lists[result.to_i].select(option)  
+    else puts "No selection made"
+    end    
+  end 
+  
+  def login(username, password, serverShort)
     if serverShort == "post"
       puts "calling on QA-Post"
       server = "http://qa-post-production.dev.academyart.edu"
@@ -25,10 +64,18 @@ class AAU
     else
       puts "Use a third ARg!"
     end
-    browser.goto(server)
+    $firefox.goto(server)
     sleep 1
-    browser.text_field(:name, "username").set(username)
-    browser.text_field(:name, "password").set(password)
-    browser.button(:name, "buttonWrapper:login").click
+    $firefox.text_field(:name, "username").set(username)
+    $firefox.text_field(:name, "password").set(password)
+    $firefox.button(:name, "buttonWrapper:login").click
+  end
+  
+  def userAgent
+    tempurl = $firefox.url
+    $firefox.goto('http://aauqa.github.com/serverStatus')
+    sleep 1
+    puts $firefox.p(:class,"useragent").text
+    $firefox.goto(tempurl)
   end
 end
