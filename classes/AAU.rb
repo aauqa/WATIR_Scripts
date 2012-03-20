@@ -5,6 +5,7 @@ class AAU
     $firefox = Watir::Browser.new :firefox 
   end
   #list all links, wait to choose which to click
+  
   def links
     counter = 0
     $firefox.links.each{ |l|
